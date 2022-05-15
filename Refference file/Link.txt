@@ -5,3 +5,5 @@ https://docs.microsoft.com/en-us/dotnet/framework/windows-services/walkthrough-c
 https://developers.google.com/drive/api/quickstart/nodejs
 
 https://passthemayo.gitbook.io/minecraft-server-util/frequently-asked-questions
+
+https://github.com/FragLand/minestat
