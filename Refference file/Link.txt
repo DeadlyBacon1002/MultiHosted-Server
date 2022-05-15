@@ -1,0 +1,7 @@
+https://stackoverflow.com/questions/29018001/c-sharp-serial-port-listener
+
+https://docs.microsoft.com/en-us/dotnet/framework/windows-services/walkthrough-creating-a-windows-service-application-in-the-component-designer
+
+https://developers.google.com/drive/api/quickstart/nodejs
+
+https://passthemayo.gitbook.io/minecraft-server-util/frequently-asked-questions

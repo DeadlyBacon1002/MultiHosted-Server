@@ -1,0 +1,1 @@
+var http=require('http');http.get({'host':'api.ipify.org','port':80,'path':'/'},function(resp){resp.on('data',function(ip){http.get({'host':'api.dynu.com','port':80,'path':'/nic/update?hostname=BigPPBoys.ooguy.com&myip='+ip+'&myipv6=no&password=aac699232386fc400bc756468f9baa95'},function(resp){resp.on('data',function(OO){console.log("DN updated")})})})})
