@@ -1,0 +1,10 @@
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\ConsoleAppVersion\ConsoleAppVersion\bin\Debug\ConsoleAppVersion.exe.config
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\ConsoleAppVersion\ConsoleAppVersion\bin\Debug\ConsoleAppVersion.exe
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\ConsoleAppVersion\ConsoleAppVersion\bin\Debug\ConsoleAppVersion.pdb
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\ConsoleAppVersion\ConsoleAppVersion\obj\Debug\ConsoleAppVersion.csprojAssemblyReference.cache
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\ConsoleAppVersion\ConsoleAppVersion\obj\Debug\ConsoleAppVersion.csproj.CoreCompileInputs.cache
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\ConsoleAppVersion\ConsoleAppVersion\obj\Debug\ConsoleAppVersion.exe
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\ConsoleAppVersion\ConsoleAppVersion\obj\Debug\ConsoleAppVersion.pdb
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\ConsoleAppVersion\ConsoleAppVersion\bin\Debug\Topshelf.dll
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\ConsoleAppVersion\ConsoleAppVersion\bin\Debug\Topshelf.xml
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\ConsoleAppVersion\ConsoleAppVersion\obj\Debug\ConsoleAppVersion.csproj.CopyComplete
