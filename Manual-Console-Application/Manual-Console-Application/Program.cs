@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,11 +12,12 @@ namespace Multi_Host_Services_Manual
         static void Main(string[] args)
         {
             int StartCode = StartCycle();
-            if(StartCode != 0)
+            if (StartCode != 0)
             {
                 Console.Write("Server is already hosted or hosting has not been deallocated.\n\nPress enter to exit:");
                 Console.ReadLine();
-            } else
+            }
+            else
             {
                 var autoEvent = new AutoResetEvent(false);
                 var aTimer = new System.Threading.Timer(OnTimedEvent, autoEvent, (60 * 60 * 1000), (60 * 60 * 1000));// start backup cycle every 60 minutes
