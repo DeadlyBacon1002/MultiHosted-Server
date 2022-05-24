@@ -43,5 +43,39 @@ namespace Multi_Host_Services_Manual
         {
             Console.WriteLine(source.ToString());
         }
+
+
+        private static void updateDNS()
+        {
+            //call dyudns api
+        }
+
+        private static void setDNSFlag(Boolean value)
+        {
+            //rename "true.MD" to "false.MD" or the otherway around
+        }
+
+        private static void checkDNSFlag()
+        {
+            //check if file "true.MD" exists
+        }
+
+        private static void fileBK()
+        {
+            //delete oldest BK on drive
+            //rename remaining BK's
+            //upload current gamefile as newest BK
+            //rename newest BK
+        }
+
+        private static void fileDownload()
+        {
+            //download most recent BK and rename to standard name on local machine
+        }
+
+        private static void interGameBK()
+        {
+            //At start of program, copy most recent BK to inter-file
+        }
     }
 }
