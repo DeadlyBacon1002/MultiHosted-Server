@@ -1,0 +1,7 @@
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\bin\Debug\Manual-Console-Application.exe.config
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\bin\Debug\Manual-Console-Application.exe
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\bin\Debug\Manual-Console-Application.pdb
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\obj\Debug\Manual-Console-Application.csprojAssemblyReference.cache
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\obj\Debug\Manual-Console-Application.csproj.CoreCompileInputs.cache
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\obj\Debug\Manual-Console-Application.exe
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\obj\Debug\Manual-Console-Application.pdb
