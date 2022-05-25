@@ -48,11 +48,18 @@ namespace Multi_Host_Services_Manual
         private static void updateDNS()
         {
             //call dyudns api
+            //http://api.ipify.org/ Port:80
+            //http://api.dynu.com/nic/update?hostname=BigPPBoys.ooguy.com&myip='+ip+'&myipv6=no&password=aac699232386fc400bc756468f9baa95
         }
 
         private static void setDNSFlag(Boolean value)
         {
             //rename "true.MD" to "false.MD" or the otherway around
+        }
+
+        private static void checkServerStatus()
+        {
+            //https://mcapi.us/server/status?ip=s.nerd.nu&port=25565
         }
 
         private static void checkDNSFlag()
@@ -73,7 +80,7 @@ namespace Multi_Host_Services_Manual
             //download most recent BK and rename to standard name on local machine
         }
 
-        private static void interGameBK()
+        private static void interGameBK(Boolean StartOfSession)
         {
             //At start of program, copy most recent BK to inter-file
         }
