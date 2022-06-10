@@ -7,18 +7,33 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Manual_Console_Application;
 
 namespace Multi_Host_Services_Manual
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            int StartCode = StartCycle();
+            string res = await updateDNS();
+            if (res.Contains("nochg")) { Console.WriteLine("penis"); }
+            if (res.Contains("good")) { Console.WriteLine("good"); }
+            Console.WriteLine(res);
+            Console.ReadLine();
+
+            /*int StartCode = await StartCycle();
             if (StartCode != 0)
             {
-                Console.Write("Server is already hosted or hosting has not been deallocated.\n\nPress enter to exit:");
-                Console.ReadLine();
+                if(StartCode == 1)
+                {
+                    Console.Write("Server is already hosted.\n\nPress enter to exit:");
+                    Console.ReadLine();
+                }
+                else
+                {
+                    Console.Write("Server flag is set to active.\n\nPress enter to exit:");
+                    Console.ReadLine();
+                }
             }
             else
             {
@@ -29,20 +44,22 @@ namespace Multi_Host_Services_Manual
                 aTimer.Dispose();
                 EndCycle();
                 //exit cycle
-            }
+            }*/
         }
 
-        private static int StartCycle()// run to determind hosting and initial actions if those actions can be taken
+        private static async Task<int> StartCycle()// run to determind hosting and initial actions if those actions can be taken
         {
+            API Validator = new API();
             //check serverstatus
-            if(!checkServerStatus())
+            bool serverStatus = await Validator.checkServerStatus();
+            if(serverStatus == false)
             {
                 //check allocation
                 if (!checkDNSFlag())
                 {
                     //set allocation
                     setDNSFlag(true);
-                    updateDNS();
+                    string res = await updateDNS();
                     //run download serverfiles
                     fileDownload();
                     interGameBK(true);
@@ -58,6 +75,11 @@ namespace Multi_Host_Services_Manual
             }
         }
 
+        private static void OnTimedEvent(object source)//backup cycle
+        {
+            fileBK();
+        }
+
         private static int EndCycle()
         {
             //deallocate recourses
@@ -68,33 +90,19 @@ namespace Multi_Host_Services_Manual
             return 0;
         }
 
-        private static void OnTimedEvent(object source)//backup cycle
-        {
-            fileBK();
-        }
-
-        private static void updateDNS()
-        {
-            //call dyudns api
-            //http://api.ipify.org/ Port:80
-            //http://api.dynu.com/nic/update?hostname=BigPPBoys.ooguy.com&myip='+ip+'&myipv6=no&password=aac699232386fc400bc756468f9baa95
-        }
-
-        private static void setDNSFlag(Boolean value)
-        {
-            //rename "true.MD" to "false.MD" or the otherway around
-        }
-
         private static Boolean checkServerStatus()//returns true if server is runnung
         {
             //https://mcapi.us/server/status?ip=s.nerd.nu&port=25565
             return true;
         }
 
-        private static Boolean checkDNSFlag()//returns true if file "true.MD" exists
+        private static async Task<string> updateDNS()
         {
-            //check if file "true.MD" exists
-            return true;
+            //call dyudns api
+            API aa = new API();
+            var result = await aa.UpdateDNSP1();
+            return result;
+
         }
 
         private static void fileBK()
@@ -114,11 +122,18 @@ namespace Multi_Host_Services_Manual
         {
             //At start of program, copy most recent BK to inter-file
         }
+
+        private static Boolean checkDNSFlag()//returns true if file "true.MD" exists
+        {
+            //check if file "true.MD" exists
+            return true;
+        }
+
+        private static void setDNSFlag(Boolean value)
+        {
+            //rename "true.MD" to "false.MD" or the otherway around
+        }
     }
 
 
-    public class API_Call
-    {
-        
-    }
 }
