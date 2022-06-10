@@ -15,23 +15,33 @@ namespace Multi_Host_Services_Manual
     {
         static async Task Main(string[] args)
         {
-            string res = await updateDNS();
-            if (res.Contains("nochg")) { Console.WriteLine("penis"); }
-            if (res.Contains("good")) { Console.WriteLine("good"); }
-            Console.WriteLine(res);
+            API api = new API();
+            string res = await api.UpdateDNSP1();
+            if (res.Contains("nochg")) { Console.WriteLine("No change"); }
+            if (res.Contains("good")) { Console.WriteLine("penis"); }
             Console.ReadLine();
 
             /*int StartCode = await StartCycle();
-            if (StartCode != 0)
+            if (StartCode != 0)// initial error codes
             {
                 if(StartCode == 1)
                 {
                     Console.Write("Server is already hosted.\n\nPress enter to exit:");
                     Console.ReadLine();
                 }
-                else
+                if(StartCode == 2)
                 {
                     Console.Write("Server flag is set to active.\n\nPress enter to exit:");
+                    Console.ReadLine();
+                }
+                if (StartCode == 3)
+                {
+                    Console.Write("DNS failed to upload.\n\nPress enter to exit:");
+                    Console.ReadLine();
+                }
+                if (StartCode == 4)
+                {
+                    Console.Write("Savefile failed to download.\n\nPress enter to exit:");
                     Console.ReadLine();
                 }
             }
@@ -49,9 +59,9 @@ namespace Multi_Host_Services_Manual
 
         private static async Task<int> StartCycle()// run to determind hosting and initial actions if those actions can be taken
         {
-            API Validator = new API();
+            API api = new API();
             //check serverstatus
-            bool serverStatus = await Validator.checkServerStatus();
+            bool serverStatus = await api.checkServerStatus();
             if(serverStatus == false)
             {
                 //check allocation
@@ -59,9 +69,9 @@ namespace Multi_Host_Services_Manual
                 {
                     //set allocation
                     setDNSFlag(true);
-                    string res = await updateDNS();
+                    string res = await api.UpdateDNSP1();//check if dns succeeded 3
                     //run download serverfiles
-                    fileDownload();
+                    fileDownload();//check whether download succeeded 4
                     interGameBK(true);
                     //Start Server |||||||||||||||||||||||||||||||||||||||||||||
                     return 0;
@@ -90,22 +100,7 @@ namespace Multi_Host_Services_Manual
             return 0;
         }
 
-        private static Boolean checkServerStatus()//returns true if server is runnung
-        {
-            //https://mcapi.us/server/status?ip=s.nerd.nu&port=25565
-            return true;
-        }
-
-        private static async Task<string> updateDNS()
-        {
-            //call dyudns api
-            API aa = new API();
-            var result = await aa.UpdateDNSP1();
-            return result;
-
-        }
-
-        private static void fileBK()
+        private static void fileBK()//LocalFilesystem
         {
             //delete oldest BK on drive
             //rename remaining BK's
@@ -113,23 +108,23 @@ namespace Multi_Host_Services_Manual
             //rename newest BK
         }
 
-        private static void fileDownload()
+        private static void fileDownload()//Drive
         {
             //download most recent BK and rename to standard name on local machine
         }
 
-        private static void interGameBK(Boolean StartOfSession)
+        private static void interGameBK(Boolean StartOfSession)//Drive
         {
             //At start of program, copy most recent BK to inter-file
         }
 
-        private static Boolean checkDNSFlag()//returns true if file "true.MD" exists
+        private static Boolean checkDNSFlag()//returns true if file "true.MD" exists//Drive
         {
             //check if file "true.MD" exists
             return true;
         }
 
-        private static void setDNSFlag(Boolean value)
+        private static void setDNSFlag(Boolean value)//Drive
         {
             //rename "true.MD" to "false.MD" or the otherway around
         }

@@ -12,23 +12,6 @@ namespace Manual_Console_Application
     class API
     {
         public string result;
-        // GET api/values
-        public async Task<string> Get(String url)
-        {
-
-            var result = await GetExternalResponse(url);
-            return result;
-        }
-
-        private async Task<string> GetExternalResponse(String url)
-        {
-            var client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-            var result = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(result);
-            return result;
-        }
 
         public async Task<bool> checkServerStatus()
         {
@@ -44,7 +27,8 @@ namespace Manual_Console_Application
             if(result == "True")
             {
                 return true;
-            } else
+            }
+            else
             {
                 return false;
             }
