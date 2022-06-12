@@ -17,7 +17,7 @@ namespace Multi_Host_Services_Manual
         {
             string[] arguments = new string[3];
             arguments[0] = "6";
-            arguments[1] = "C:/Users/MrW/AppData/Roaming/.FabricServer";
+            arguments[1] = "C:/Users/MrW/AppData/Roaming/.fabric";
             
             int StartCode = await StartCycle();
             if (StartCode != 0)// initial error codes
