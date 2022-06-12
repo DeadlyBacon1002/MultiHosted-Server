@@ -15,13 +15,11 @@ namespace Multi_Host_Services_Manual
     {
         static async Task Main(string[] args)
         {
-            API api = new API();
-            string res = await api.UpdateDNSP1();
-            if (res.Contains("nochg")) { Console.WriteLine("No change"); }
-            if (res.Contains("good")) { Console.WriteLine("penis"); }
-            Console.ReadLine();
-
-            /*int StartCode = await StartCycle();
+            string[] arguments = new string[3];
+            arguments[0] = "6";
+            arguments[1] = "C:/Users/MrW/AppData/Roaming/.FabricServer";
+            
+            int StartCode = await StartCycle();
             if (StartCode != 0)// initial error codes
             {
                 if(StartCode == 1)
@@ -36,7 +34,7 @@ namespace Multi_Host_Services_Manual
                 }
                 if (StartCode == 3)
                 {
-                    Console.Write("DNS failed to upload.\n\nPress enter to exit:");
+                    Console.Write("DNS failed to update.\n\nPress enter to exit:");
                     Console.ReadLine();
                 }
                 if (StartCode == 4)
@@ -47,14 +45,22 @@ namespace Multi_Host_Services_Manual
             }
             else
             {
-                var autoEvent = new AutoResetEvent(false);
-                var aTimer = new System.Threading.Timer(OnTimedEvent, autoEvent, (60 * 60 * 1000), (60 * 60 * 1000));// start backup cycle every 60 minutes
+                MinecraftServerWrapper SERVER = new MinecraftServerWrapper(arguments);
+                await SERVER.Start();
+                //var autoEvent = new AutoResetEvent(false);
+                //var aTimer = new System.Threading.Timer(OnTimedEvent, autoEvent, (60 * 60 * 1000), (60 * 60 * 1000));// start backup cycle every 60 minutes
                 Console.WriteLine("press enter to exit");
                 Console.ReadLine();
-                aTimer.Dispose();
-                EndCycle();
+                //aTimer.Dispose();
+                int code = await EndCycle(SERVER);
+                if(code != 0)
+                {
+                    Console.WriteLine("Some error has ocurred while closing the server");
+                    Console.WriteLine("press enter to exit");
+                    Console.ReadLine();
+                }
                 //exit cycle
-            }*/
+            }
         }
 
         private static async Task<int> StartCycle()// run to determind hosting and initial actions if those actions can be taken
@@ -65,20 +71,24 @@ namespace Multi_Host_Services_Manual
             if(serverStatus == false)
             {
                 //check allocation
-                if (!checkDNSFlag())
-                {
+                //if (!checkDNSFlag())
+                //{
                     //set allocation
-                    setDNSFlag(true);
+                    //setDNSFlag(true);
                     string res = await api.UpdateDNSP1();//check if dns succeeded 3
+                    if(!res.Contains("nochg") && !res.Contains("good"))
+                    {
+                        return 3;
+                    }
                     //run download serverfiles
-                    fileDownload();//check whether download succeeded 4
-                    interGameBK(true);
+                    //fileDownload();//check whether download succeeded 4
+                    //interGameBK(true);
                     //Start Server |||||||||||||||||||||||||||||||||||||||||||||
                     return 0;
-                } else
-                {
-                    return 2;
-                }
+                //} else
+                //{
+                    //return 2;
+                //}
             } else
             {
                 return 1;
@@ -90,13 +100,14 @@ namespace Multi_Host_Services_Manual
             fileBK();
         }
 
-        private static int EndCycle()
+        private static async Task<int> EndCycle(MinecraftServerWrapper SERVER)
         {
             //deallocate recourses
-            setDNSFlag(false);
+            await SERVER.Stop();
+            //setDNSFlag(false);
             //stop server ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
             //run end of session cyle
-            interGameBK(false);
+            //interGameBK(false);
             return 0;
         }
 
@@ -129,6 +140,4 @@ namespace Multi_Host_Services_Manual
             //rename "true.MD" to "false.MD" or the otherway around
         }
     }
-
-
 }
