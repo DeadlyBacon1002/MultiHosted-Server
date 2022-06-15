@@ -18,7 +18,6 @@ namespace Multi_Host_Services_Manual
             string[] arguments = new string[3];
             arguments[0] = "6";
             arguments[1] = "C:/Users/MrW/AppData/Roaming/.fabric";
-            
             int StartCode = await StartCycle();
             if (StartCode != 0)// initial error codes
             {
@@ -49,8 +48,20 @@ namespace Multi_Host_Services_Manual
                 await SERVER.Start();
                 //var autoEvent = new AutoResetEvent(false);
                 //var aTimer = new System.Threading.Timer(OnTimedEvent, autoEvent, (60 * 60 * 1000), (60 * 60 * 1000));// start backup cycle every 60 minutes
-                Console.WriteLine("press enter to exit");
-                Console.ReadLine();
+                bool Flag = false;
+                string userInput;
+                while(Flag == false)
+                {
+                    userInput = Console.ReadLine();
+                    if(userInput == "stop" || userInput == "/stop")
+                    {
+                        Flag = true;
+                    } 
+                    else
+                    {
+                        SERVER.WriteToServer(userInput);
+                    }
+                }
                 //aTimer.Dispose();
                 int code = await EndCycle(SERVER);
                 if(code != 0)
