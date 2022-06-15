@@ -1,10 +1,6 @@
 C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\bin\Debug\Manual-Console-Application.exe.config
 C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\bin\Debug\Manual-Console-Application.exe
 C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\bin\Debug\Manual-Console-Application.pdb
-C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\obj\Debug\Manual-Console-Application.csprojAssemblyReference.cache
-C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\obj\Debug\Manual-Console-Application.csproj.CoreCompileInputs.cache
-C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\obj\Debug\Manual-Console-Application.exe
-C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\obj\Debug\Manual-Console-Application.pdb
 C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\bin\Debug\Google.Apis.Auth.dll
 C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\bin\Debug\Google.Apis.Auth.PlatformServices.dll
 C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\bin\Debug\Google.Apis.Core.dll
@@ -21,4 +17,8 @@ C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\
 C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\bin\Debug\Google.Apis.Drive.v3.pdb
 C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\bin\Debug\Google.Apis.Drive.v3.xml
 C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\bin\Debug\Newtonsoft.Json.xml
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\obj\Debug\Manual-Console-Application.csproj.AssemblyReference.cache
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\obj\Debug\Manual-Console-Application.csproj.CoreCompileInputs.cache
 C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\obj\Debug\Manual-Console-Application.csproj.CopyComplete
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\obj\Debug\Manual-Console-Application.exe
+C:\Users\MrW\Documents\Dev\Github\MultiHosted-Server\Manual-Console-Application\Manual-Console-Application\obj\Debug\Manual-Console-Application.pdb
