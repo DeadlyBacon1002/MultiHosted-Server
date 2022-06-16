@@ -24,20 +24,12 @@ namespace Manual_Console_Application
             processToRunInfo.FileName = "java.exe";
             process = new Process();
             process.StartInfo = processToRunInfo;
-            //process.Close();
-            /*process.Exited += new DataReceivedEventHandler((sender, e) =>
-            {
-                if (!String.IsNullOrEmpty(e.ToString()))
-                {
-                    Console.WriteLine(e.ToString());
-                }
-            });*/
+            process.EnableRaisingEvents = true;
 
-            
+
         }
         public async Task Start()
         {
-            //Console.WriteLine("Server is starting...");//
             process.Start();
             process.OutputDataReceived += new System.Diagnostics.DataReceivedEventHandler((sender, e) =>
             {
