@@ -60,7 +60,24 @@ namespace Multi_Host_Services_Manual
                     } 
                     else
                     {
-                        SERVER.WriteToServer(userInput);
+                        if(userInput == "-BKP")
+                        {
+                            fileBK("C:/Users/Bacon/AppData/Roaming/.fabric", "Multi-Host");
+                        }
+                        else
+                        {
+                            if(userInput == "help")
+                            {
+                                Console.WriteLine("||||||||||||||||||||||||||||||||||||||||||||\n\n"+
+                                                  "Type '-BKP' to mabually start a backup cycle\n\n"+
+                                                  "||||||||||||||||||||||||||||||||||||||||||||");
+                                SERVER.WriteToServer(userInput);
+                            }
+                            else
+                            {
+                                SERVER.WriteToServer(userInput);
+                            }
+                        }
                     }
                 }
                 //aTimer.Dispose();
@@ -77,6 +94,7 @@ namespace Multi_Host_Services_Manual
 
         private static async Task<int> StartCycle()// run to determind hosting and initial actions if those actions can be taken
         {
+            return 0;
             API api = new API();
             //check serverstatus
             bool serverStatus = await api.checkServerStatus();
