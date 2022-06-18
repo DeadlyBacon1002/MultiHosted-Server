@@ -8,9 +8,18 @@ namespace Multi_Host_Services_Manual
     class Program
     {
         static string[] arguments = new string[3];
+
+        public static bool ConfigSetter(string Path)
+        {
+            return false;
+        }
+
         static async Task Main(string[] args)
         {
-            arguments[0] = "6";
+            GoogleDriveHandler T = new GoogleDriveHandler();
+            await T.DriveStuff(arguments);
+            Console.ReadKey();
+            /*arguments[0] = "6";
             arguments[1] = "C:/Users/Bacon/AppData/Roaming/.fabric";
             int StartCode = await StartCycle();
             if (StartCode != 0)// initial error codes
@@ -67,7 +76,7 @@ namespace Multi_Host_Services_Manual
                                 SERVER.WriteToServer(userInput);
                             }
                             else
-                            {*/
+                            {
                                 SERVER.WriteToServer(userInput);
                             //}
                         //}
@@ -82,7 +91,7 @@ namespace Multi_Host_Services_Manual
                     Console.ReadLine();
                 }
                 //exit cycle
-            }
+            }*/
         }
 
         private static async Task<int> StartCycle()// run to determind hosting and initial actions if those actions can be taken

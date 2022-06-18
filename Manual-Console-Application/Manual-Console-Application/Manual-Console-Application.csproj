@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="API.cs" />
     <Compile Include="DriveAPI.cs" />
+    <Compile Include="GoogleDriveHandler.cs" />
     <Compile Include="MinecraftServerWrapper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
