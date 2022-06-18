@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
 using Newtonsoft.Json.Linq;
 
 namespace Manual_Console_Application
@@ -13,12 +8,15 @@ namespace Manual_Console_Application
     {
         public string result;
 
+
         public async Task<bool> checkServerStatus()
         {
+            //Headers.Add()
             var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36");
             HttpResponseMessage response = await client.GetAsync("https://mcapi.us/server/status?ip=BigPPBoys.ooguy.com");
             response.EnsureSuccessStatusCode();
-            var result = await response.Content.ReadAsStringAsync();
+            result = await response.Content.ReadAsStringAsync();
             JObject json = JObject.Parse(result);
             if (json.ContainsKey("online"))
             {

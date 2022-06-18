@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using Manual_Console_Application;
 using System.IO;
 
@@ -18,7 +11,7 @@ namespace Multi_Host_Services_Manual
         {
             string[] arguments = new string[3];
             arguments[0] = "6";
-            arguments[1] = "C:/Users/Bacon/AppData/Roaming/.fabric";
+            arguments[1] = "C:/Users/MrW/AppData/Roaming/.fabric";
             int StartCode = await StartCycle();
             if (StartCode != 0)// initial error codes
             {
@@ -47,8 +40,8 @@ namespace Multi_Host_Services_Manual
             {
                 MinecraftServerWrapper SERVER = new MinecraftServerWrapper(arguments);
                 await SERVER.Start();
-                var autoEvent = new AutoResetEvent(false);
-                var aTimer = new System.Threading.Timer(OnTimedEvent, autoEvent, (60 * 60 * 1000), (60 * 60 * 1000));// start backup cycle every 60 minutes
+                //var autoEvent = new AutoResetEvent(false);
+                //var aTimer = new System.Threading.Timer(OnTimedEvent, autoEvent, (60 * 60 * 1000), (60 * 60 * 1000));// start backup cycle every 60 minutes
                 bool Flag = false;
                 string userInput;
                 while(Flag == false)
@@ -60,7 +53,7 @@ namespace Multi_Host_Services_Manual
                     } 
                     else
                     {
-                        if(userInput == "-BKP")
+                        /*if(userInput == "-BKP")
                         {
                             fileBK("C:/Users/Bacon/AppData/Roaming/.fabric", "Multi-Host");
                         }
@@ -74,10 +67,10 @@ namespace Multi_Host_Services_Manual
                                 SERVER.WriteToServer(userInput);
                             }
                             else
-                            {
+                            {*/
                                 SERVER.WriteToServer(userInput);
-                            }
-                        }
+                            //}
+                        //}
                     }
                 }
                 //aTimer.Dispose();
@@ -94,7 +87,7 @@ namespace Multi_Host_Services_Manual
 
         private static async Task<int> StartCycle()// run to determind hosting and initial actions if those actions can be taken
         {
-            return 0;
+
             API api = new API();
             //check serverstatus
             bool serverStatus = await api.checkServerStatus();
@@ -125,14 +118,14 @@ namespace Multi_Host_Services_Manual
             }
         }
 
-        private static void OnTimedEvent(object source)//backup cycle
+        /*private static void OnTimedEvent(object source)//backup cycle
         {
             int code = fileBK("C:/Users/Bacon/AppData/Roaming/.fabric", "Multi-Host");
             if(code == 1)
             {
                 Console.WriteLine("Savefile doesn't exist.");
             }
-        }
+        }*/
 
         private static async Task<int> EndCycle(MinecraftServerWrapper SERVER)
         {
@@ -268,6 +261,7 @@ namespace Multi_Host_Services_Manual
         private static void interGameBK(Boolean StartOfSession)//Drive
         {
             //At start of program, copy most recent BK to inter-file
+            fileBK("C:/Users/MrW/AppData/Roaming/.fabric", "Multi-Host");
         }
 
         private static Boolean checkDNSFlag()//returns true if file "true.MD" exists//Drive
