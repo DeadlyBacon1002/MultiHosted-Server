@@ -7,11 +7,11 @@ namespace Multi_Host_Services_Manual
 {
     class Program
     {
+        static string[] arguments = new string[3];
         static async Task Main(string[] args)
         {
-            string[] arguments = new string[3];
             arguments[0] = "6";
-            arguments[1] = "C:/Users/MrW/AppData/Roaming/.fabric";
+            arguments[1] = "C:/Users/Bacon/AppData/Roaming/.fabric";
             int StartCode = await StartCycle();
             if (StartCode != 0)// initial error codes
             {
@@ -261,7 +261,7 @@ namespace Multi_Host_Services_Manual
         private static void interGameBK(Boolean StartOfSession)//Drive
         {
             //At start of program, copy most recent BK to inter-file
-            fileBK("C:/Users/MrW/AppData/Roaming/.fabric", "Multi-Host");
+            fileBK(arguments[1], "Multi-Host");
         }
 
         private static Boolean checkDNSFlag()//returns true if file "true.MD" exists//Drive
