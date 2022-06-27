@@ -9,19 +9,30 @@ namespace Multi_Host_Services_Manual
     {
         static string[] arguments = new string[3];
 
-        public static bool ConfigSetter(string Path)
+        public static bool ConfigSetter()
         {
+            string dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            dir += "/config.json";
+            arguments[0] = "6";
+            arguments[1] = "C:/Users/Bacon/AppData/Roaming/.fabric";
+            arguments[2] = "client_secret_240159371726-koqlnoj44uhvcfu3k8e48o6926r4sqju.apps.googleusercontent.com.json";
             return false;
         }
 
         static async Task Main(string[] args)
         {
-            GoogleDriveHandler T = new GoogleDriveHandler();
-            await T.DriveStuff(arguments);
+            API a = new API();
+            await a.UpdateDNSP1();
+            return;
+            GoogleDriveHandler GDH = new GoogleDriveHandler(arguments[2]);
+            arguments[1] = "C:/Users/MrW/AppData/Roaming/.fabric";
+            //await GDH.UpdateDrive();
+            //GDH.uploadBKP("C:/Users/MrW/AppData/Roaming/.fabric/.L_BCK/BK1.7z");
+            fileBK(arguments[1], "Multi-Host");
+            //ExtractZip((arguments[1] + "/.L_BCK/BK1.7z"),(arguments[1] + "/.L_BCK/Extracted"));
             Console.ReadKey();
-            /*arguments[0] = "6";
-            arguments[1] = "C:/Users/Bacon/AppData/Roaming/.fabric";
-            int StartCode = await StartCycle();
+            return;
+            int StartCode = await StartCycle(GDH);
             if (StartCode != 0)// initial error codes
             {
                 if(StartCode == 1)
@@ -39,18 +50,11 @@ namespace Multi_Host_Services_Manual
                     Console.Write("DNS failed to update.\n\nPress enter to exit:");
                     Console.ReadLine();
                 }
-                if (StartCode == 4)
-                {
-                    Console.Write("Savefile failed to download.\n\nPress enter to exit:");
-                    Console.ReadLine();
-                }
             }
             else
             {
                 MinecraftServerWrapper SERVER = new MinecraftServerWrapper(arguments);
                 await SERVER.Start();
-                //var autoEvent = new AutoResetEvent(false);
-                //var aTimer = new System.Threading.Timer(OnTimedEvent, autoEvent, (60 * 60 * 1000), (60 * 60 * 1000));// start backup cycle every 60 minutes
                 bool Flag = false;
                 string userInput;
                 while(Flag == false)
@@ -62,28 +66,19 @@ namespace Multi_Host_Services_Manual
                     } 
                     else
                     {
-                        /*if(userInput == "-BKP")
+                        if(userInput == "help")
                         {
-                            fileBK("C:/Users/Bacon/AppData/Roaming/.fabric", "Multi-Host");
+                            Console.WriteLine("||||||||||||||||||||||||||||||||||||||||||||\n\n"+
+                                              "||||||||||||||||||||||||||||||||||||||||||||");
+                            SERVER.WriteToServer(userInput);
                         }
                         else
                         {
-                            if(userInput == "help")
-                            {
-                                Console.WriteLine("||||||||||||||||||||||||||||||||||||||||||||\n\n"+
-                                                  "Type '-BKP' to mabually start a backup cycle\n\n"+
-                                                  "||||||||||||||||||||||||||||||||||||||||||||");
-                                SERVER.WriteToServer(userInput);
-                            }
-                            else
-                            {
-                                SERVER.WriteToServer(userInput);
-                            //}
-                        //}
+                            SERVER.WriteToServer(userInput);
+                        }
                     }
                 }
-                //aTimer.Dispose();
-                int code = await EndCycle(SERVER);
+                int code = await EndCycle(SERVER, GDH);
                 if(code != 0)
                 {
                     //Console.WriteLine("Some error has ocurred while closing the server");
@@ -91,59 +86,78 @@ namespace Multi_Host_Services_Manual
                     Console.ReadLine();
                 }
                 //exit cycle
-            }*/
+            }
         }
 
-        private static async Task<int> StartCycle()// run to determind hosting and initial actions if those actions can be taken
+        private static async Task<int> StartCycle(GoogleDriveHandler GDH)// run to determind hosting and initial actions if those actions can be taken
         {
-
             API api = new API();
             //check serverstatus
             bool serverStatus = await api.checkServerStatus();
             if(serverStatus == false)
             {
-                //check allocation
-                //if (!checkDNSFlag())
-                //{
-                    //set allocation
-                    //setDNSFlag(true);
+                serverStatus = await GDH.CheckFlag();
+                if (!serverStatus)
+                {
                     string res = await api.UpdateDNSP1();//check if dns succeeded 3
                     if(!res.Contains("nochg") && !res.Contains("good"))
                     {
                         return 3;
                     }
-                    //run download serverfiles
-                    //fileDownload();//check whether download succeeded 4
-                    //interGameBK(true);
-                    //Start Server |||||||||||||||||||||||||||||||||||||||||||||
+                    fileBK(arguments[1], "Multi-Host");
+                    if (0 == await GDH.downloadSave())
+                    {
+                        DeleteFolderContentsRec((arguments[1] + "/" + "Multi-Host"), true);//delete current local save && misc files
+                        File.Delete(arguments[1] + "/server.properties");
+                        File.Delete(arguments[1] + "/usercache.json");
+                        Directory.Delete((arguments[1] + "/" + "Multi-Host"));
+                        var dir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                        string[] allFiles = System.IO.Directory.GetFiles(dir + "/");
+                        string fileName = "";
+                        foreach (string file in allFiles)
+                        {
+                            if(file.Contains("BK1"))
+                            {
+                                fileName = file;
+                                break;
+                            }
+                        }
+                        ExtractZip((fileName),(arguments[1]+ "/" + "Multi-Host"));//delete downloaded file
+                        File.Delete(fileName);
+                        await GDH.SetFlag(true);
+                    } 
+                    else
+                    {
+                        Console.WriteLine("Drive file not found, continuing with local save");
+                    }
                     return 0;
-                //} else
-                //{
-                    //return 2;
-                //}
+                } 
+                else
+                {
+                    return 2;
+                }
             } else
             {
                 return 1;
             }
         }
 
-        /*private static void OnTimedEvent(object source)//backup cycle
+        private static async Task<int> EndCycle(MinecraftServerWrapper SERVER, GoogleDriveHandler GDH)
         {
-            int code = fileBK("C:/Users/Bacon/AppData/Roaming/.fabric", "Multi-Host");
-            if(code == 1)
-            {
-                Console.WriteLine("Savefile doesn't exist.");
-            }
-        }*/
-
-        private static async Task<int> EndCycle(MinecraftServerWrapper SERVER)
-        {
-            //deallocate recourses
+            
             await SERVER.Stop();
-            //setDNSFlag(false);
-            //stop server ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
-            //run end of session cyle
-            //interGameBK(false);
+            fileBK(arguments[1], "Multi-Host");
+            await GDH.UpdateDrive();
+            string[] allFiles = System.IO.Directory.GetFiles(arguments[1] + "/.L_BCK/");//Change path to yours
+            foreach(string fileName in allFiles)
+            {
+                if (fileName.Contains(arguments[1] + "/.L_BCK/BK1"))
+                {
+                    GDH.uploadBKP((arguments[1] + "/.L_BCK/"), fileName);
+                }
+            }
+           //|||||||||||||||||||||||
+            await GDH.SetFlag(false);
             return 0;
         }
 
@@ -159,32 +173,63 @@ namespace Multi_Host_Services_Manual
             {
                 Directory.CreateDirectory(bkpDir);
             }
-            if (File.Exists((bkpDir + "/BK5.7z")))
+            string[] allFiles = System.IO.Directory.GetFiles(bkpDir+"/");//Change path to yours
+            var FlagSorted = false;
+            while(FlagSorted == false)
             {
-                File.Delete((bkpDir + "/BK5.7z"));
-            }
-            for(int I = 4; I > 0; I--)
-            {
-                if (File.Exists((bkpDir + "/BK"+I+".7z")))
+                FlagSorted = true;
+                for (int I = 0; I < (allFiles.Length-1); I++)
                 {
-                    File.Move((bkpDir + "/BK" + I + ".7z"), (bkpDir + "/BK" + (I+1) + ".7z"));
+                    
+                    if (allFiles[I].TrimStart((bkpDir + "/").ToCharArray())[0] < allFiles[(I + 1)].TrimStart((bkpDir + "/").ToCharArray())[0])
+                    {
+                        var swopper = allFiles[I];
+                        allFiles[I] = allFiles[(I + 1)];
+                        allFiles[(I + 1)] = swopper;
+                        FlagSorted = false;
+                    }
                 }
+            }
+            foreach (string file in allFiles)
+            {
+                if (file.Contains((bkpDir + "/BK" + 7)))
+                {
+                    File.Delete(file);
+                }
+                else
+                {
+                    for (int I = 1; I < 7; I++)
+                    {
+                        var Check = (bkpDir + "/BK" + I);
+                        if (file.Contains(Check))
+                        {
+                            var Builder = file;
+                            Builder = Builder.Replace(("/BK" + I), ("/BK" + (I + 1)));
+                            File.Move(file, Builder);
+                        }
+                    }
+                }
+           
             }
             //.bkp folder has been prepped
             //now need to copy SaveFile to Bkp folder
-            if(Directory.Exists((bkpDir + "/BKTemp")))
+            if(Directory.Exists((bkpDir + "/" + saveFileName)))
             {
-                DeleteFolderContentsRec((bkpDir + "/BKTemp"), true);
-                Directory.Delete((bkpDir + "/BKTemp"));
+                DeleteFolderContentsRec((bkpDir + "/" + saveFileName), true);
+                Directory.Delete((bkpDir + "/" + saveFileName));
             }
-            CopyFolderRec(SaveDir, (bkpDir + "/BKTemp"), true);
+            CopyFolderRec(SaveDir, (bkpDir + "/" + saveFileName), true);
+            //add misc fils
+            File.Copy((serverDir + "/server.properties"), (bkpDir + "/" + saveFileName + "/server.properties"));
+            File.Copy((serverDir + "/usercache.json"), (bkpDir + "/" + saveFileName + "/usercache.json"));
+
             //and compress it to BK1.7z
-            CreateZip((bkpDir + "/BKTemp"), (bkpDir + "/BK1.7z"));
-            DeleteFolderContentsRec((bkpDir + "/BKTemp"), true);
-            Directory.Delete((bkpDir + "/BKTemp"));
-            Console.WriteLine("||||     Backup Made     ||||");
-            Console.WriteLine();
-            Console.WriteLine("||||||      (OwO)      ||||||");
+            DateTime Stamp = DateTime.Now;
+            var ZipName = (bkpDir + "/BK1-" + Stamp.Year + "'" + Stamp.Month + "'" + Stamp.Day + "-" + Stamp.Hour + "'" + Stamp.Minute + "'" + Stamp.Second  + ".7z");
+            CreateZip((bkpDir + "/" + saveFileName), (ZipName));
+            DeleteFolderContentsRec((bkpDir + "/" + saveFileName), true);
+            Directory.Delete((bkpDir + "/" + saveFileName));
+            Console.WriteLine("||||     Backup Made     ||||\n||||||      (OwO)      ||||||");
             return 0;
         }
 
@@ -198,6 +243,31 @@ namespace Multi_Host_Services_Manual
             p.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
             System.Diagnostics.Process x = System.Diagnostics.Process.Start(p);
             x.WaitForExit();
+        }
+
+        public static void ExtractZip(string sourceName, string destination)
+        {
+            sourceName = @sourceName;
+            destination = @destination;
+            // If the directory doesn't exist, create it.
+            if (!Directory.Exists(destination))
+                Directory.CreateDirectory(destination);
+
+            string zPath = @"C:\Program Files\7-Zip\7zG.exe";
+            // change the path and give yours 
+            try
+            {
+                System.Diagnostics.ProcessStartInfo pro = new System.Diagnostics.ProcessStartInfo();
+                pro.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                pro.FileName = zPath;
+                pro.Arguments = "x \"" + sourceName + "\" -o" + destination;
+                System.Diagnostics.Process x = System.Diagnostics.Process.Start(pro);
+                x.WaitForExit();
+            }
+            catch (System.Exception Ex)
+            {
+                //DO logic here 
+            }
         }
 
         private static void DeleteFolderContentsRec(string sourceDir, bool recursive)
@@ -262,26 +332,5 @@ namespace Multi_Host_Services_Manual
             }
         }
 
-        private static void fileDownload()//Drive
-        {
-            //download most recent BK and rename to standard name on local machine
-        }
-
-        private static void interGameBK(Boolean StartOfSession)//Drive
-        {
-            //At start of program, copy most recent BK to inter-file
-            fileBK(arguments[1], "Multi-Host");
-        }
-
-        private static Boolean checkDNSFlag()//returns true if file "true.MD" exists//Drive
-        {
-            //check if file "true.MD" exists
-            return true;
-        }
-
-        private static void setDNSFlag(Boolean value)//Drive
-        {
-            //rename "true.MD" to "false.MD" or the otherway around
-        }
     }
 }

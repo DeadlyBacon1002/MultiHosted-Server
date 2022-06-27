@@ -22,9 +22,8 @@ namespace Manual_Console_Application
             process = new Process();
             process.StartInfo = processToRunInfo;
             process.EnableRaisingEvents = true;
-
-
         }
+
         public async Task Start()
         {
             process.Start();

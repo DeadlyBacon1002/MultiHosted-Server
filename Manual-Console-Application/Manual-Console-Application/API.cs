@@ -11,7 +11,6 @@ namespace Manual_Console_Application
 
         public async Task<bool> checkServerStatus()
         {
-            //Headers.Add()
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36");
             HttpResponseMessage response = await client.GetAsync("https://mcapi.us/server/status?ip=BigPPBoys.ooguy.com");
